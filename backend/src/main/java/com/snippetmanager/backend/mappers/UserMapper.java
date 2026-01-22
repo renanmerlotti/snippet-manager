@@ -8,7 +8,7 @@ import com.snippetmanager.backend.entities.User;
 import java.util.List;
 
 public class UserMapper {
-    public static UserResponseDTO mapUserToUserResponse(User user) {
+    public static UserResponseDTO mapUserToUserResponseDTO(User user) {
         List<SnippetDTO> snippetDTOs = user.getSnippets().stream()
                 .map(s -> {
                     return SnippetMapper.mapSnippetToSnippetDTO(s);
@@ -22,7 +22,7 @@ public class UserMapper {
         );
     }
 
-    public static UserRegistrationDTO mapUserToUserRegistration(User user) {
+    public static UserRegistrationDTO mapUserToUserRegistrationDTO(User user) {
         return new UserRegistrationDTO(
             user.getUsername(),
             user.getEmail(),
