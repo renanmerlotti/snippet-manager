@@ -6,10 +6,9 @@ import com.snippetmanager.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -25,4 +24,17 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable("id") Long userId) {
+        UserResponseDTO userResponseDTO = userService.getUserById(userId);
+
+        return ResponseEntity.ok(userResponseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        List<UserResponseDTO> userResponseDTOList = userService.getAllUsers();
+
+        return ResponseEntity.ok(userResponseDTOList);
+    }
 }

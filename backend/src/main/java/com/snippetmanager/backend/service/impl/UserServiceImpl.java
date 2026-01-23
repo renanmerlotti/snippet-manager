@@ -3,11 +3,15 @@ package com.snippetmanager.backend.service.impl;
 import com.snippetmanager.backend.dtos.UserRegistrationDTO;
 import com.snippetmanager.backend.dtos.UserResponseDTO;
 import com.snippetmanager.backend.entities.User;
+import com.snippetmanager.backend.exceptions.ResourceNotFoundException;
 import com.snippetmanager.backend.mappers.UserMapper;
 import com.snippetmanager.backend.repositories.UserRepository;
 import com.snippetmanager.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +26,24 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
 
         return UserMapper.mapUserToUserResponseDTO(savedUser);
+    }
+
+    @Override
+    public UserResponseDTO getUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("O usuário de id " + userId + " não foi encontrado"));
+
+        return UserMapper.mapUserToUserResponseDTO(user);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAllUsers() {
+        List<User> userList = userRepository.findAll();
+
+        return userList.stream()
+                .map((user) -> UserMapper.mapUserToUserResponseDTO(user))
+                .collect(Collectors.toList());
     }
 
 
