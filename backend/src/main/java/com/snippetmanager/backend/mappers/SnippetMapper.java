@@ -17,13 +17,14 @@ public class SnippetMapper {
     }
 
     public static Snippet mapSnippetDTOToSnippet(SnippetDTO snippetDTO, User user) {
-        return new Snippet(
-                snippetDTO.getId(),
-                snippetDTO.getTitle(),
-                snippetDTO.getDescription(),
-                snippetDTO.getContent(),
-                snippetDTO.getLanguage(),
-                user
-        );
+        Snippet snippet = new Snippet();
+
+        snippet.setTitle(snippetDTO.getTitle());
+        snippet.setDescription(snippetDTO.getDescription());
+        snippet.setContent(snippetDTO.getContent());
+        snippet.setLanguage(snippetDTO.getLanguage());
+        snippet.setUser(user);
+
+        return snippet;
     }
 }
