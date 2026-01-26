@@ -11,6 +11,9 @@ import com.snippetmanager.backend.service.SnippetService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class SnippetServiceImpl implements SnippetService {
@@ -31,5 +34,31 @@ public class SnippetServiceImpl implements SnippetService {
         return SnippetMapper.mapSnippetToSnippetDTO(savedSnippet);
     }
 
+    @Override
+    public SnippetDTO getSnippetById(Long id) {
+        Snippet snippet = snippetRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("O snippet de id " + id +  " não foi encontrado"));
+
+        return SnippetMapper.mapSnippetToSnippetDTO(snippet);
+    }
+
+    @Override
+    public List<SnippetDTO> getAllSnippets() {
+        List<Snippet> listSnippets = snippetRepository.findAll();
+
+        return listSnippets.stream()
+                .map((snippet) -> SnippetMapper.mapSnippetToSnippetDTO(snippet))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteSnippet(Long id) {
+        snippetRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("O snippet de id " + id +  " não foi encontrado"));
+
+        snippetRepository.deleteById(id);
+    }
 
 }

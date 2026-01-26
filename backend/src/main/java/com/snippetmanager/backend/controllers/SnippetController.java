@@ -5,10 +5,9 @@ import com.snippetmanager.backend.service.SnippetService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("api/snippets")
 @RestController
@@ -22,5 +21,26 @@ public class SnippetController {
         SnippetDTO savedSnippet = snippetService.createSnippet(snippetDTO);
 
         return new ResponseEntity<>(savedSnippet, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<SnippetDTO> getSnippetById(@RequestBody @PathVariable("id") Long id) {
+        SnippetDTO snippetDTO = snippetService.getSnippetById(id);
+
+        return  ResponseEntity.ok(snippetDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SnippetDTO>> getAllSnippets() {
+        List<SnippetDTO> listSnippetDTOs = snippetService.getAllSnippets();
+
+        return ResponseEntity.ok(listSnippetDTOs);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteSnippetById(@PathVariable("id") Long id) {
+        snippetService.deleteSnippet(id);
+
+        return ResponseEntity.ok("Snippet deletado com sucesso");
     }
 }
