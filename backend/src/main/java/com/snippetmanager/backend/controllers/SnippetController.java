@@ -24,7 +24,7 @@ public class SnippetController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<SnippetDTO> getSnippetById(@RequestBody @PathVariable("id") Long id) {
+    public ResponseEntity<SnippetDTO> getSnippetById(@PathVariable("id") Long id) {
         SnippetDTO snippetDTO = snippetService.getSnippetById(id);
 
         return  ResponseEntity.ok(snippetDTO);
