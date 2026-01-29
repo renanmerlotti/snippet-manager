@@ -1,10 +1,18 @@
 import { useState } from 'react'
 import './App.css'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Login from './components/Login'
 
 function App() {
   return (
-    <div className='bg-red-700 min-h-screen max-w-3xs'>
-
+    <div className=''>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<Login />}></Route>
+          <Route path='/dashboard'></Route>
+          <Route path='/register'></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
