@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { login } from '../services/authService'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Login() {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
+    const navigate = useNavigate()
 
     const handleUsername = (e) => {
         setUsername(e.target.value)
@@ -14,11 +17,20 @@ function Login() {
         setPassword(e.target.value)
     }
 
-    function login(e) {
+    const handleLogin = async (e) => {
         e.preventDefault()
 
-        const user = {username, password}
-        console.log(user)
+        try {
+            const response = await login({username, password})
+
+            const token = response.data.token
+
+            localStorage.setItem('token', token)
+
+            navigate('/dashboard')
+        } catch (error) {
+            console.log("Erro no login ", error)
+        }
     }
 
   return (
@@ -60,7 +72,7 @@ function Login() {
                     />
                 </div>
 
-                <button className='flex bg-title-color rounded-3xl font-bold justify-center py-1.5 my-1.5 transition active:scale-95 duration-150' onClick={login}>Log-In</button>
+                <button className='flex bg-title-color rounded-3xl font-bold justify-center py-1.5 my-1.5 transition active:scale-95 duration-150' onClick={handleLogin}>Log-In</button>
             </form>
 
 
