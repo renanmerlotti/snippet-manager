@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("api/snippets")
 @RestController
 @AllArgsConstructor
+@CrossOrigin("*")
 public class SnippetController {
 
     private SnippetService snippetService;
