@@ -1,7 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { register } from '../services/authService'
+import toast from 'react-hot-toast'
 
 function Register() {
+
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const navigate = useNavigate()
+    
+    const handleUsername = (e) => {
+        setUsername(e.target.value)
+    }
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value)
+    }
+
+    const handlePassword = (e) => {
+        setPassword(e.target.value)
+    }
+
+    const handleRegister = async (e) => {
+        e.preventDefault()
+
+        try {
+            await register({username, email, password})
+
+            navigate("/login")
+            
+            toast.success("Sua conta foi registrada com sucesso")
+        } catch (error) {
+            console.log("Erro ao se registrar ", error)
+            toast.error("Erro ao se registrar, por favor verifique suas credenciais")
+        }
+    }
+
   return (
     <div className='w-full min-h-screen flex flex-col items-center bg-main-background'>
 
@@ -22,6 +58,9 @@ function Register() {
                     <input 
                     type="text" 
                     className='bg-common-text rounded-3xl px-4 py-2'
+                    placeholder='Digite seu username'
+                    value={username}
+                    onChange={handleUsername}
                     />
                 </div>
 
@@ -30,23 +69,29 @@ function Register() {
                     <input 
                     type="text"
                     className='bg-common-text rounded-3xl px-4 py-2'
+                    placeholder='Digite seu email'
+                    value={email}
+                    onChange={handleEmail}
                      />
                 </div>
                 
                 <div className='flex flex-col gap-2'>
                     <label htmlFor="" className='text-common-text font-semibold text-xl'>Password</label>
                     <input 
-                    type="text"
+                    type="password"
                     className='bg-common-text rounded-3xl px-4 py-2'
+                    placeholder='Digite sua senha'
+                    value={password}
+                    onChange={handlePassword}
                      />
                 </div>
 
-                <button className='flex bg-title-color rounded-3xl font-bold justify-center py-1.5 my-1.5 transition active:scale-95 duration-150'>Sign-In</button>
+                <button className='flex bg-title-color rounded-3xl font-bold justify-center py-1.5 my-1.5 transition active:scale-95 duration-150' onClick={handleRegister}>Sign-In</button>
                 
             </form>
 
 
-            <p className='text-common-text text-sm text-center'>Já tem uma conta? <Link className='text-blue-500 hover:underline hover:text-blue-400'>Entre aqui</Link></p>
+            <p className='text-common-text text-sm text-center'>Já tem uma conta? <Link className='text-blue-500 hover:underline hover:text-blue-400' to="/login">Entre aqui</Link></p>
         </div>
     </div>
   )

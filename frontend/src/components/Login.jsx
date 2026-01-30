@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { login } from '../services/authService'
 import { Link, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 function Login() {
 
@@ -28,8 +29,11 @@ function Login() {
             localStorage.setItem('token', token)
 
             navigate('/dashboard')
+
+            toast.success("Login realizado com sucesso")
         } catch (error) {
             console.log("Erro no login ", error)
+            toast.error("Erro ao fazer login, por favor verifique suas credenciais")
         }
     }
 
@@ -76,7 +80,7 @@ function Login() {
             </form>
 
 
-            <p className='text-common-text text-sm text-center'>Ainda não tem uma conta? <Link className='text-blue-500 hover:underline hover:text-blue-400'>Registre-se</Link></p>
+            <p className='text-common-text text-sm text-center'>Ainda não tem uma conta? <Link className='text-blue-500 hover:underline hover:text-blue-400' to="/register">Registre-se</Link></p>
         </div>
     </div>
   )

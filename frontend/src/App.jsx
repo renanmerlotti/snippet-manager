@@ -3,10 +3,13 @@ import './App.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './components/Login'
 import Register from './components/Register'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <div className=''>
+      <Toaster position='top-right'></Toaster>
+
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Login />}></Route>
