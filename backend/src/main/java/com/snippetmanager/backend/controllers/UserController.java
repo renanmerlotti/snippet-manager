@@ -3,6 +3,7 @@ package com.snippetmanager.backend.controllers;
 import com.snippetmanager.backend.dtos.UserRegistrationDTO;
 import com.snippetmanager.backend.dtos.UserResponseDTO;
 import com.snippetmanager.backend.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
         UserResponseDTO savedUser = userService.createUser(userRegistrationDTO);
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);

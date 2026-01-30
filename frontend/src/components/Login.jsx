@@ -8,6 +8,11 @@ function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
+    const [errors, setErrors] = useState({
+        username: '',
+        password: ''
+    })
+
     const navigate = useNavigate()
 
     const handleUsername = (e) => {
@@ -21,6 +26,11 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault()
 
+        if(!validateForm()) {
+            toast.error("Por favor, corrija os erros no formulário");
+            return
+        }
+
         try {
             const response = await login({username, password})
 
@@ -33,8 +43,32 @@ function Login() {
             toast.success("Login realizado com sucesso")
         } catch (error) {
             console.log("Erro no login ", error)
-            toast.error("Erro ao fazer login, por favor verifique suas credenciais")
         }
+    }
+
+
+    function validateForm() {
+        let valid = true
+
+        const errorsCopy = {...errors}
+
+        if(username.trim()) {
+            errorsCopy.username = ''
+        } else {
+            errorsCopy.username = "O nome de usuário é obrigatório"
+            valid = false
+        }
+
+        if (password.trim()) {
+            errorsCopy.password = ''
+        } else {
+            errorsCopy.password = "A senha é um campo obrigatório"
+            valid = false
+        }
+
+        setErrors(errorsCopy)
+
+        return valid
     }
 
   return (
@@ -46,34 +80,40 @@ function Login() {
 
         <div className='bg-card-login flex flex-col items-center w-full max-w-sm p-8 gap-6 rounded-3xl'>
 
-            <h2 className='text-common-text font-bold text-3xl text-center'>
+            <h2 className='text-common-text font-bold text-3xl py-3 text-center'>
                 Log-In
             </h2>
 
-            <form action="" className='flex flex-col gap-6'>
+            <form action="" className='flex flex-col gap-6 w-full'>
 
                 <div className='flex flex-col gap-2'>
                     <label htmlFor="" className='text-common-text font-semibold text-xl'>Username</label>
                     <input 
                     type="text"
-                    className='bg-common-text rounded-3xl px-4 py-2'
+                    className={`bg-common-text rounded-3xl px-4 py-2 transition-all ${errors.username ? 'border border-red-500' : 'border border-transparent'}`}
                     placeholder='Digite seu username'
                     onChange={handleUsername}
                     value={username}
                     name='username'
                      />
+                    <div className='h-4'>
+                        {errors.username && <span className='text-red-500 text-sm'>{errors.username}</span>}
+                    </div>
                 </div>
 
                 <div className='flex flex-col gap-2'>
                     <label htmlFor="" className='text-common-text font-semibold text-xl'>Password</label>
                     <input 
                     type="password"
-                    className='bg-common-text rounded-3xl px-4 py-2'
+                    className={`bg-common-text rounded-3xl px-4 py-2 transition-all ${errors.password ? 'border border-red-500' : 'border border-transparent'}`}
                     placeholder='Digite sua senha'
                     value={password}
                     onChange={handlePassword}
                     name='password'
                     />
+                    <div className='h-4'>
+                        {errors.password && <span className='text-red-500 text-sm'>{errors.password}</span>}
+                    </div>
                 </div>
 
                 <button className='flex bg-title-color rounded-3xl font-bold justify-center py-1.5 my-1.5 transition active:scale-95 duration-150' onClick={handleLogin}>Log-In</button>
