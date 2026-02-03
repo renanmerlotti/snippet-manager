@@ -1,6 +1,20 @@
 import React from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+
+        localStorage.clear()
+
+        toast.success("Sessao encerrada")
+
+        navigate("/login")
+    }
+
   return (
     <header className='w-full bg-main-background sticky top-0 border-b border-emerald-900/50 shadow-md'>
         <div className='container mx-auto flex items-center justify-between md:px-6'>
@@ -17,7 +31,7 @@ function Header() {
                     <span className='text-common-text font-semibold text-lg hover:text-gray-300 hidden sm:block'>Meu Perfil</span>
                 </div>
 
-                <button className='rounded-2xl py-1 px-4 md:px-6 border-2 border-red-500 text-red-500 text-sm md:text-base active:scale-95 transition-transform mr-2'>
+                <button className='rounded-2xl py-1 px-4 md:px-6 border-2 border-red-500 text-red-500 text-sm md:text-base active:scale-95 transition-transform mr-2' onClick={handleLogout}>
                     <p className='mb-0.5'>Log-Out</p>
                 </button>
             </nav>
