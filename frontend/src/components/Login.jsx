@@ -74,8 +74,8 @@ function Login() {
   return (
     <div className='w-full min-h-screen flex flex-col items-center bg-main-background'>
 
-        <h1 className='text-title-color text-5xl px-7 mt-24 mb-24 font-bold'>
-            Snippet Manager
+        <h1 className='text-title-color text-3xl md:text-5xl px-7 mt-24 mb-24 font-bold'>
+            Snippet <span className='text-common-text'>Manager</span>
         </h1>
 
         <div className='bg-card-login flex flex-col items-center w-full max-w-sm p-8 gap-6 rounded-3xl'>

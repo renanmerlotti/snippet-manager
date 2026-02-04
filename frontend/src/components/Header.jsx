@@ -8,8 +8,6 @@ function Header() {
     const handleLogout = () => {
         localStorage.removeItem("token")
 
-        localStorage.clear()
-
         toast.success("Sessao encerrada")
 
         navigate("/login")
