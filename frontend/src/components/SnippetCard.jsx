@@ -5,12 +5,12 @@ function SnippetCard({ snippet }) {
     <div className='bg-card-login rounded-2xl'>
 
         <div className='flex flex-row justify-between p-4 border-b-2 border-emerald-900'>
-            <h3 className='font-bold text-common-text text-xl'>{snippet.title}</h3>
+            <h3 className='font-bold text-common-text text-base md:text-lg lg:text-xl'>{snippet.title}</h3>
             <span className='text-title-color font-semibold'>{snippet.language}</span>
         </div>
 
         <pre className='bg-common-text overflow-hidden p-1'>
-            <code className='line-clamp-6'>
+            <code className='line-clamp-6 font-code text-sm md:text-base'>
                 {snippet.content}
             </code>
         </pre>
