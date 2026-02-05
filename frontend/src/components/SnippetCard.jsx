@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SnippetCard({ snippet }) {
+function SnippetCard({ snippet, onDelete }) {
   return (
     <div className='bg-card-login rounded-2xl'>
 
@@ -9,7 +9,7 @@ function SnippetCard({ snippet }) {
             <span className='text-title-color font-semibold'>{snippet.language}</span>
         </div>
 
-        <pre className='bg-common-text overflow-hidden p-1'>
+        <pre className='bg-common-text overflow-hidden p-1 h-36'>
             <code className='line-clamp-6 font-code text-sm md:text-base'>
                 {snippet.content}
             </code>
@@ -23,6 +23,7 @@ function SnippetCard({ snippet }) {
             </button>
             <button 
                 className='p-2 text-red-500 border-2 border-red-500 rounded-xl font-semibold m-3 hover:border-red-800 hover:text-red-800 active:scale-95 transition-all'
+                onClick={() => onDelete(snippet.id)}
             >
                 Deletar
             </button>

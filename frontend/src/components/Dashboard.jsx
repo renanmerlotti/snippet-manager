@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import SnippetCard from './SnippetCard'
-import { getAllSnippets, getMySnippets } from '../services/snippetService'
+import { deleteSnippet, getAllSnippets, getMySnippets } from '../services/snippetService'
 
 function Dashboard() {
 
@@ -14,6 +14,17 @@ function Dashboard() {
   const listSnippets = () => {
     getMySnippets().then((response) => {
       setSnippets(response.data)
+    }).catch(error => {
+      console.error(error)
+    })
+  }
+
+  const handleDelete = (id) => {
+    console.log('ID recebido:', id, 'Tipo:', typeof id)
+    console.log('IDs dos snippets:', snippets.map(s => ({ id: s.id, tipo: typeof s.id })))
+
+    deleteSnippet(id).then(() => {
+      setSnippets(snippets.filter(s => s.id !== id))
     }).catch(error => {
       console.error(error)
     })
@@ -32,7 +43,7 @@ function Dashboard() {
 
         <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
           {snippets.map(snippet => (
-              <SnippetCard key={snippet.id} snippet={snippet}/>
+              <SnippetCard key={snippet.id} snippet={snippet} onDelete={handleDelete}/>
           ))}
         </div>
       </main>
