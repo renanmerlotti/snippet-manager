@@ -61,4 +61,13 @@ public class SnippetServiceImpl implements SnippetService {
         snippetRepository.deleteById(id);
     }
 
+    @Override
+    public List<SnippetDTO> findByUserUsername(String username) {
+        List<Snippet> snippets = snippetRepository.findByUserUsername(username);
+
+        return  snippets.stream()
+                .map(snippet -> SnippetMapper.mapSnippetToSnippetDTO(snippet))
+                .collect(Collectors.toList());
+    }
+
 }

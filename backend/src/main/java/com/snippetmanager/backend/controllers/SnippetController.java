@@ -3,16 +3,17 @@ package com.snippetmanager.backend.controllers;
 import com.snippetmanager.backend.dtos.SnippetDTO;
 import com.snippetmanager.backend.service.SnippetService;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("api/snippets")
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
 public class SnippetController {
 
     private SnippetService snippetService;
@@ -44,4 +45,13 @@ public class SnippetController {
 
         return ResponseEntity.ok("Snippet deletado com sucesso");
     }
+
+    @GetMapping("/username")
+    public ResponseEntity<List<SnippetDTO>> getAlLSnippetsByUsername(Principal principal) {
+        String username = principal.getName();
+
+        List<SnippetDTO> snippets = snippetService.findByUserUsername(username);
+        return ResponseEntity.ok(snippets);
+    }
+
 }
