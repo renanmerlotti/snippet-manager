@@ -13,7 +13,7 @@ export const createSnippet = (snippet) => {
 }
 
 export const deleteSnippet = (id) => {
-    return api.delete(`/snippet/${id}`)
+    return api.delete(`/snippets/${id}`)
 }
 
 export const getMySnippets = () => {
