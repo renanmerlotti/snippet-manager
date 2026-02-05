@@ -16,8 +16,16 @@ function SnippetCard({ snippet }) {
         </pre>
 
         <div className='flex flex-row justify-between'>
-            <button className='p-2 text-common-text border-2 border-title-color rounded-2xl font-semibold m-3'>Ver Mais</button>
-            <button className='p-2 text-red-500 border-2 border-red-500 rounded-xl font-semibold m-3'>Deletar</button>
+            <button 
+                className='p-2 text-common-text border-2 border-title-color rounded-2xl font-semibold m-3 hover:border-emerald-600 hover:text-gray-300 active:scale-95 transition-all'
+            >
+                Ver Mais
+            </button>
+            <button 
+                className='p-2 text-red-500 border-2 border-red-500 rounded-xl font-semibold m-3 hover:border-red-800 hover:text-red-800 active:scale-95 transition-all'
+            >
+                Deletar
+            </button>
         </div>
 
     </div>

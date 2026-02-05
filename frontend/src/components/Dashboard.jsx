@@ -1,35 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import SnippetCard from './SnippetCard'
+import { getAllSnippets, getMySnippets } from '../services/snippetService'
 
 function Dashboard() {
 
-  const snippets = [
-    {
-        id: 1,
-        title: "Auth Service Implementation",
-        description: "Lógica central de login e registro usando Axios para comunicação com o Spring Boot.",
-        content: "import axios from 'axios';\n\nconst API_URL = 'http://localhost:8080/api/auth';\n\nexport const login = async (credentials) => {\n    const response = await axios.post(`${API_URL}/login`, credentials);\n    if (response.data.token) {\n        localStorage.setItem('token', response.data.token);\n    }\n    return response.data;\n};\n\nexport const register = (userData) => {\n    return axios.post(`${API_URL}/register`, userData);\n};",
-        language: "JavaScript",
-        userId: 101
-    },
-    {
-        id: 2,
-        title: "Spring Security Config",
-        description: "Configuração básica de segurança para habilitar JWT e desabilitar CSRF em APIs stateless.",
-        content: "@Configuration\n@EnableWebSecurity\npublic class SecurityConfig {\n\n    @Bean\n    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {\n        return http\n            .csrf(csrf -> csrf.disable())\n            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))\n            .authorizeHttpRequests(auth -> auth\n                .requestMatchers(\"/api/auth/**\").permitAll()\n                .anyRequest().authenticated()\n            )\n            .build();\n    }\n}",
-        language: "Java",
-        userId: 101
-    },
-    {
-        id: 3,
-        title: "Snippet Entity Model",
-        description: "Entidade JPA que representa a tabela de snippets no banco de dados MySQL.",
-        content: "@Entity\n@Table(name = \"snippets\")\npublic class Snippet {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n\n    private String title;\n    private String description;\n\n    @Column(columnDefinition = \"TEXT\")\n    private String content;\n\n    private String language;\n\n    @ManyToOne\n    @JoinColumn(name = \"user_id\")\n    private User user;\n}",
-        language: "Java",
-        userId: 101
-    }
-];
+  const [snippets, setSnippets] = useState([])
+
+  useEffect(() => {
+    listSnippets()
+  }, [])
+
+  const listSnippets = () => {
+    getMySnippets().then((response) => {
+      setSnippets(response.data)
+    }).catch(error => {
+      console.error(error)
+    })
+  }
 
   return (
     <div className='min-h-screen bg-main-background'>

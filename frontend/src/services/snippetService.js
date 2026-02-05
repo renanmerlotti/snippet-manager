@@ -15,3 +15,7 @@ export const createSnippet = (snippet) => {
 export const deleteSnippet = (id) => {
     return api.delete(`/snippet/${id}`)
 }
+
+export const getMySnippets = () => {
+    return api.get('/snippets/username') 
+}
