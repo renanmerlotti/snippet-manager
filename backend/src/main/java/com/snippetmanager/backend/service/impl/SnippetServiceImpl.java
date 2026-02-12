@@ -23,10 +23,10 @@ public class SnippetServiceImpl implements SnippetService {
     private UserRepository userRepository;
 
     @Override
-    public SnippetDTO createSnippet(SnippetDTO snippetDTO) {
-        User user = userRepository.findById(snippetDTO.getUserId())
+    public SnippetDTO createSnippet(SnippetDTO snippetDTO, String username) {
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("O usuário de id " + snippetDTO.getUserId() + " não foi encontrado"));
+                        new ResourceNotFoundException("Usuário " + username + " não encontrado"));
 
         Snippet snippet = SnippetMapper.mapSnippetDTOToSnippet(snippetDTO, user);
         Snippet savedSnippet = snippetRepository.save(snippet);

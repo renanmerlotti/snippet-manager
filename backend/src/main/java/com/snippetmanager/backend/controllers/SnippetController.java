@@ -19,8 +19,8 @@ public class SnippetController {
     private SnippetService snippetService;
 
     @PostMapping
-    public ResponseEntity<SnippetDTO> createSnippet(@RequestBody SnippetDTO snippetDTO) {
-        SnippetDTO savedSnippet = snippetService.createSnippet(snippetDTO);
+    public ResponseEntity<SnippetDTO> createSnippet(@RequestBody SnippetDTO snippetDTO, Principal principal) {
+        SnippetDTO savedSnippet = snippetService.createSnippet(snippetDTO, principal.getName());
 
         return new ResponseEntity<>(savedSnippet, HttpStatus.CREATED);
     }

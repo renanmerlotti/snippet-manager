@@ -5,7 +5,7 @@ import com.snippetmanager.backend.dtos.SnippetDTO;
 import java.util.List;
 
 public interface SnippetService {
-    SnippetDTO createSnippet(SnippetDTO snippetDTO);
+    SnippetDTO createSnippet(SnippetDTO snippetDTO, String username);
 
     SnippetDTO getSnippetById(Long id);
 
