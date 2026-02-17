@@ -70,4 +70,19 @@ public class SnippetServiceImpl implements SnippetService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public SnippetDTO updateSnippet(Long id, SnippetDTO snippetDTO, String username) {
+        Snippet snippet = snippetRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("O snippet de id " + id +  " não foi encontrado"));
+
+        snippet.setTitle(snippetDTO.getTitle());
+        snippet.setDescription(snippetDTO.getDescription());
+        snippet.setContent(snippetDTO.getContent());
+        snippet.setLanguage(snippetDTO.getLanguage());
+
+        Snippet savedSnippet = snippetRepository.save(snippet);
+        return SnippetMapper.mapSnippetToSnippetDTO(savedSnippet);
+    }
+
 }

@@ -54,4 +54,15 @@ public class SnippetController {
         return ResponseEntity.ok(snippets);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<SnippetDTO> updateSnippetById(
+            @PathVariable("id") Long id,
+            @RequestBody SnippetDTO snippetDTO,
+            Principal principal
+    ) {
+
+        SnippetDTO updatedSnippet = snippetService.updateSnippet(id, snippetDTO, principal.getName());
+
+        return ResponseEntity.ok(updatedSnippet);
+    }
 }

@@ -14,4 +14,6 @@ public interface SnippetService {
     void deleteSnippet(Long id);
 
     List<SnippetDTO> findByUserUsername(String username);
+
+    SnippetDTO updateSnippet(Long id, SnippetDTO snippetDTO, String username);
 }
