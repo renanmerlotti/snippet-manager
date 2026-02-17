@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import SnippetCard from './SnippetCard'
-import { deleteSnippet, getAllSnippets, getMySnippets } from '../services/snippetService'
+import { deleteSnippet, getAllSnippets, getMySnippets, createSnippet } from '../services/snippetService'
+import Modal from './Modal';
+import SnippetForm from './SnippetForm';
 
 function Dashboard() {
 
   const [snippets, setSnippets] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     listSnippets()
@@ -30,6 +33,15 @@ function Dashboard() {
     })
   }
 
+  const handleSave = (formData) => {
+    createSnippet(formData).then(() => {
+      setIsModalOpen(false);
+      listSnippets();
+    }).catch(error => {
+      console.error("Erro ao criar snippet:", error)
+    })
+  }
+
   return (
     <div className='min-h-screen bg-main-background'>
       <Header />
@@ -38,7 +50,12 @@ function Dashboard() {
 
         <div className='flex flex-row justify-between p-4'>
           <h2 className='font-bold text-common-text text-2xl'>Meus <span className='text-title-color'>Snippets</span></h2>
-          <button className='p-2 border-2 border-title-color rounded-2xl text-common-text font-semibold'>Novo Snippet</button>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className='p-2 border-2 border-title-color rounded-2xl text-common-text font-semibold hover:scale-98 hover:text-gray-300 hover:border-emerald-700 transition-all'
+          >
+            Novo Snippet
+          </button>
         </div>
 
         <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
@@ -47,6 +64,18 @@ function Dashboard() {
           ))}
         </div>
       </main>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title="Criar Novo Snippet"
+      >
+        <SnippetForm 
+          onSave={handleSave} 
+          onCancel={() => setIsModalOpen(false)} 
+        />
+      </Modal>
+
     </div>
   )
 }

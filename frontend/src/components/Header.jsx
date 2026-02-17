@@ -29,7 +29,9 @@ function Header() {
                     <span className='text-common-text font-semibold text-lg hover:text-gray-300 hidden sm:block'>Meu Perfil</span>
                 </div>
 
-                <button className='rounded-2xl font-semibold py-1 px-4 md:px-6 border-2 border-red-500 text-red-500 text-sm md:text-base active:scale-95 transition-transform mr-2' onClick={handleLogout}>
+                <button 
+                className='rounded-2xl font-semibold py-1 px-4 md:px-6 border-2 border-red-500 text-red-500 
+                text-sm md:text-base active:scale-95 transition-transform mr-2 hover:scale-98 hover:text-red-800 hover:border-red-800' onClick={handleLogout}>
                     <p className='mb-0.5'>Log-Out</p>
                 </button>
             </nav>
