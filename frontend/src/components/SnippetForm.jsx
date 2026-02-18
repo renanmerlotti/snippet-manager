@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-function SnippetForm( { onSave, onCancel }) {
+function SnippetForm( { onSave, onCancel, initialData }) {
 
     const [formData, setFormData] = useState({
         title: '',
@@ -14,6 +14,14 @@ function SnippetForm( { onSave, onCancel }) {
         onSave(formData)
     }
 
+    useEffect(() => {
+        if (initialData) {
+            setFormData(initialData)
+        } else {
+            setFormData({ title: '', language: '', description: '', content: '' })
+        }
+    }, [initialData])
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
             <div className="grid grid-cols-2 border-b border-title-color/10">
@@ -21,7 +29,7 @@ function SnippetForm( { onSave, onCancel }) {
                     required
                     type="text"
                     placeholder="Título do Snippet"
-                    className="bg-transparent p-4 text-common-text placeholder:text-common-text/20 text-sm outline-none border-r border-title-color/10 focus:bg-title-color/5 transition-colors"
+                    className="bg-transparent p-4 text-common-text placeholder:text-gray-800 text-sm outline-none border-r border-title-color/10 focus:bg-title-color/5 transition-colors"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 />
@@ -39,7 +47,7 @@ function SnippetForm( { onSave, onCancel }) {
                 <input 
                     type="text"
                     placeholder="Breve descrição do que o código faz..."
-                    className="w-full bg-transparent p-4 text-common-text/60 placeholder:text-common-text/20 text-xs outline-none focus:bg-title-color/5 transition-colors"
+                    className="w-full bg-transparent p-4 text-common-text/60 placeholder:text-gray-800 text-xs outline-none focus:bg-title-color/5 transition-colors"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 />

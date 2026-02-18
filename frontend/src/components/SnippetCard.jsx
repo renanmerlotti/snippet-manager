@@ -1,31 +1,34 @@
 import React from 'react'
 
-function SnippetCard({ snippet, onDelete }) {
+function SnippetCard({ snippet, onDelete, onEdit }) {
   return (
     <div className='bg-card-login rounded-2xl'>
 
-        <div className='flex flex-row justify-between p-4 border-b-2 border-emerald-900'>
+        <div className='flex flex-row justify-between p-4'>
             <h3 className='font-bold text-common-text text-base md:text-lg lg:text-xl'>{snippet.title}</h3>
             <span className='text-title-color font-semibold'>{snippet.language}</span>
         </div>
 
-        <pre className='bg-common-text overflow-hidden p-1 h-36'>
-            <code className='line-clamp-6 font-code text-sm md:text-base'>
+        <pre className='bg-main-background overflow-hidden p-1 h-36 border-x-4 border-card-login'>
+            <code className='line-clamp-6 p-2 text-common-text font-code text-sm md:text-base'>
                 {snippet.content}
             </code>
         </pre>
 
-        <div className='flex flex-row justify-between'>
+        <div className='flex justify-end items-center rounded-b-2xl gap-6 p-4 bg-card-login'>
             <button 
-                className='p-2 text-common-text border-2 border-title-color rounded-2xl font-semibold m-3 hover:border-emerald-600 hover:text-gray-300 active:scale-95 transition-all'
+                type="button"
+                onClick={() => onDelete(snippet.id)}
+                className="text-xs font-bold text-red-500 hover:text-red-800 hover:scale-98 transition-all tracking-widest"
             >
-                Ver Mais
+                DELETAR
             </button>
             <button 
-                className='p-2 text-red-500 border-2 border-red-500 rounded-xl font-semibold m-3 hover:border-red-800 hover:text-red-800 active:scale-95 transition-all'
-                onClick={() => onDelete(snippet.id)}
+                type="button"
+                onClick={onEdit}
+                className="px-8 py-2 bg-title-color hover:bg-emerald-700 hover:scale-98 text-main-background rounded font-bold text-xs transition-all active:scale-95"
             >
-                Deletar
+                VER MAIS
             </button>
         </div>
 

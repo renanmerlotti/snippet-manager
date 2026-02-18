@@ -14,11 +14,11 @@ function Header() {
     }
 
   return (
-    <header className='w-full bg-main-background sticky top-0 border-b border-emerald-900/50 shadow-md'>
+    <header className='w-full bg-main-background sticky top-0 border-b-2 border-emerald-900/50 shadow-md'>
         <div className='container mx-auto flex items-center justify-between md:px-6'>
 
             <div>
-                <h1 className='font-bold text-2xl md:text-3xl text-title-color p-4 md:p-6'>Snippet <span className='text-common-text'>Manager</span></h1>
+                <h1 className='font-bold text-xl md:text-3xl text-title-color p-4 md:p-6'>Snippet <span className='text-common-text'>Manager</span></h1>
             </div>
             
             <nav className='flex flex-row justify-between gap-4 md:gap-8'>
@@ -30,9 +30,10 @@ function Header() {
                 </div>
 
                 <button 
-                className='rounded-2xl font-semibold py-1 px-4 md:px-6 border-2 border-red-500 text-red-500 
-                text-sm md:text-base active:scale-95 transition-transform mr-2 hover:scale-98 hover:text-red-800 hover:border-red-800' onClick={handleLogout}>
-                    <p className='mb-0.5'>Log-Out</p>
+                className="px-8 py-2 bg-red-700 mr-2 hover:bg-red-800 hover:scale-98 text-main-background rounded font-bold text-xs transition-all active:scale-95" 
+                onClick={handleLogout}
+                >
+                    <p className='mb-0.5'>LOG-OUT</p>
                 </button>
             </nav>
         </div>

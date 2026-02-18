@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import SnippetCard from './SnippetCard'
-import { deleteSnippet, getAllSnippets, getMySnippets, createSnippet } from '../services/snippetService'
+import { deleteSnippet, getAllSnippets, getMySnippets, createSnippet, updateSnippet } from '../services/snippetService'
 import Modal from './Modal';
 import SnippetForm from './SnippetForm';
 
@@ -9,6 +9,7 @@ function Dashboard() {
 
   const [snippets, setSnippets] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedSnippet, setSelectedSnippet] = useState(null)
 
   useEffect(() => {
     listSnippets()
@@ -33,14 +34,33 @@ function Dashboard() {
     })
   }
 
-  const handleSave = (formData) => {
-    createSnippet(formData).then(() => {
-      setIsModalOpen(false);
-      listSnippets();
-    }).catch(error => {
-      console.error("Erro ao criar snippet:", error)
-    })
+  const handleOpenCreate = () => {
+    setSelectedSnippet(null);
+    setIsModalOpen(true);
   }
+
+  const handleOpenEdit = (snippet) => {
+    setSelectedSnippet(snippet);
+    setIsModalOpen(true);
+  }
+
+  const handleSave = (formData) => {
+  if (selectedSnippet) {
+    updateSnippet(selectedSnippet.id, formData)
+      .then(() => {
+        setIsModalOpen(false)
+        listSnippets()
+      })
+      .catch(error => console.error("Erro ao atualizar:", error))
+  } else {
+    createSnippet(formData)
+      .then(() => {
+        setIsModalOpen(false)
+        listSnippets()
+      })
+      .catch(error => console.error("Erro ao criar:", error))
+  }
+}
 
   return (
     <div className='min-h-screen bg-main-background'>
@@ -49,18 +69,27 @@ function Dashboard() {
       <main className='container mx-auto px-4 py-5'>
 
         <div className='flex flex-row justify-between p-4'>
-          <h2 className='font-bold text-common-text text-2xl'>Meus <span className='text-title-color'>Snippets</span></h2>
+          
+          <h2 className='font-bold text-common-text text-xl sm:text-2xl'>
+            Meus <span className='text-title-color'>Snippets</span>
+          </h2>
+
           <button 
-            onClick={() => setIsModalOpen(true)}
-            className='p-2 border-2 border-title-color rounded-2xl text-common-text font-semibold hover:scale-98 hover:text-gray-300 hover:border-emerald-700 transition-all'
+            onClick={handleOpenCreate}
+            className="px-8 py-2 bg-title-color hover:bg-emerald-700 hover:scale-98 text-main-background rounded font-bold text-xs transition-all active:scale-95"
           >
-            Novo Snippet
+            NOVO SNIPPET
           </button>
         </div>
 
         <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
           {snippets.map(snippet => (
-              <SnippetCard key={snippet.id} snippet={snippet} onDelete={handleDelete}/>
+              <SnippetCard 
+              key={snippet.id}
+              snippet={snippet} 
+              onDelete={handleDelete}
+              onEdit={() => handleOpenEdit(snippet)}
+              />
           ))}
         </div>
       </main>
@@ -68,11 +97,12 @@ function Dashboard() {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title="Criar Novo Snippet"
+        title={selectedSnippet ? "Editar Snippet" : "Criar Novo Snippet"}
       >
         <SnippetForm 
           onSave={handleSave} 
           onCancel={() => setIsModalOpen(false)} 
+          initialData={selectedSnippet}
         />
       </Modal>
 

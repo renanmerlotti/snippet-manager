@@ -19,3 +19,7 @@ export const deleteSnippet = (id) => {
 export const getMySnippets = () => {
     return api.get('/snippets/username') 
 }
+
+export const updateSnippet = (id, snippet) => {
+    return api.put(`/snippets/${id}`, snippet)
+}
